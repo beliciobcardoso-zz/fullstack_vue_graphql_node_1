@@ -78,9 +78,9 @@ export default {
 	name: "app",
 	data() {
 		return {
-			prefixes: ["air"],
-			sufixes: ["bar"],
-			domains: ["teste", "teste2", "teste3", "teste4"]
+			prefixes: ["air", "ana"],
+			sufixes: ["bar", "paula"],
+			domains: ["teste", "teste2", "teste3", "teste4", "teste5"]
 		};
 	}
 };
@@ -94,7 +94,9 @@ export default {
 
 #main {
 	background-color: #c2bbbb;
-  padding:40px;
+	padding: 30px;
+	width: 100%;
+	max-width: 800px;
+	margin: 0 auto;
 }
-
 </style>
