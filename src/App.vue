@@ -20,17 +20,31 @@
                                         class="list-group-item"
                                         v-for="prefixe in prefixes"
                                         v-bind:key="prefixe"
-                                    >{{prefixe}}</li>
+                                    >
+                                        <div class="row">
+                                            <div class="col-md">{{ prefixe }}</div>
+                                            <div class="col-md text-right">
+                                                <button
+                                                    class="btn btn-info"
+                                                    v-on:click="deletePrefix(prefix)"
+                                                >
+                                                    <span class="fa fa-trash"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                                 <br />
                                 <div class="input-group">
                                     <input
                                         class="form-control"
                                         type="text"
+                                        v-model="prefix"
+                                        v-on:keyup.enter="addPrefix(prefix)"
                                         placeholder="Digite o Prefixo"
                                     />
                                     <div class="input-group-append">
-                                        <button class="btn btn-info" v-on:click="addPrefix()">
+                                        <button class="btn btn-info" v-on:click="addPrefix(prefix)">
                                             <span class="fa fa-plus"></span>
                                         </button>
                                     </div>
@@ -50,17 +64,31 @@
                                         class="list-group-item"
                                         v-for="sufixe in sufixes"
                                         v-bind:key="sufixe"
-                                    >{{ sufixe}}</li>
+                                    >
+                                        <div class="row">
+                                            <div class="col-md">{{ sufixe}}</div>
+                                            <div class="col-md text-right">
+                                                <button
+                                                    class="btn btn-info"
+                                                    v-on:click="deleteSufix(sufix)"
+                                                >
+                                                    <span class="fa fa-trash"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                                 <br />
                                 <div class="input-group">
                                     <input
                                         class="form-control"
                                         type="text"
+                                        v-model="sufix"
+                                        v-on:keyup.enter="addSufix(sufix)"
                                         placeholder="Digite o Sufixo"
                                     />
                                     <div class="input-group-append">
-                                        <button class="btn btn-info" v-on:click="addSufix()">
+                                        <button class="btn btn-info" v-on:click="addSufix(sufix)">
                                             <span class="fa fa-plus"></span>
                                         </button>
                                     </div>
@@ -81,7 +109,7 @@
                                 class="list-group-item"
                                 v-for="domain in domains"
                                 v-bind:key="domain"
-                            >{{ domain }}</li>
+                            >{{ domain}}</li>
                         </ul>
                     </div>
                 </div>
@@ -98,10 +126,40 @@ export default {
     name: "app",
     data() {
         return {
-            prefixes: ["air", "ana", "paulo", "Jorge"],
-            sufixes: ["bar", "paula", "henrique", "teste"],
-            domains: ["teste", "teste2", "teste3", "teste4", "teste5"]
+            prefix: "",
+            sufix: "",
+            prefixes: [],
+            sufixes: [],
+            domains: []
         };
+    },
+    methods: {
+        addPrefix(prefix) {
+            this.prefixes.push(prefix);
+            this.prefix = "";
+            this.generate();
+        },
+        addSufix(sufix) {
+            this.sufixes.push(sufix);
+            this.sufix = "";
+            this.generate();
+        },
+        deletePrefix(prefix) {
+            this.prefixes.splice(this.prefixes.indexOf(prefix), 1);
+            this.generate();
+        },
+        deleteSufix(sufix) {
+            this.sufixes.splice(this.sufixes.indexOf(sufix), 1);
+            this.generate();
+        },
+        generate() {
+            this.domains = [];
+            for (const prefix of this.prefixes) {
+                for (const sufix of this.sufixes) {
+                    this.domains.push(prefix + sufix);
+                }
+            }
+        }
     }
 };
 </script>
